@@ -1,16 +1,11 @@
-# This is a sample Python script.
+from src.QBenchAnalyzer.metrics_generator import generate_metrics
+from qiskit import QuantumCircuit
 
-# Press Mayús+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+path = "./test/circuits/"
+circuit = "qaoa_vanilla_03.qasm"
+qc = QuantumCircuit.from_qasm_file(path + circuit)
 
+metrics = generate_metrics(qc)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+print(metrics)
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
