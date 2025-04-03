@@ -26,7 +26,7 @@ Project-URL: Homepage, https://github.com/voliva-esp/QBenchAnalyzer
 Project-URL: Issues, https://github.com/voliva-esp/QBenchAnalyzer/issues
 Classifier: Programming Language :: Python :: 3
 Classifier: Operating System :: OS Independent
-Requires-Python: >=3.8
+Requires-Python: >=3.8, <4
 Description-Content-Type: text/markdown
 License-File: LICENSE.md
 

@@ -1,4 +1,4 @@
-from src.QBenchAnalyzer import generate_metrics, ICircuitGenerator, analyze_circuit_group_structural
+from QBenchAnalyzer import generate_metrics, ICircuitGenerator, analyze_circuit_group_structural
 from qiskit import QuantumCircuit
 
 PATH = "./test/circuits/"

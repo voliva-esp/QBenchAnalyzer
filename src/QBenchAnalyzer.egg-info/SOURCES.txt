@@ -1,6 +1,7 @@
 LICENSE.md
 README.md
 pyproject.toml
+setup.py
 src/QBenchAnalyzer/__init__.py
 src/QBenchAnalyzer/circuit_analyzer.py
 src/QBenchAnalyzer/circuit_generator.py
@@ -10,3 +11,4 @@ src/QBenchAnalyzer.egg-info/PKG-INFO
 src/QBenchAnalyzer.egg-info/SOURCES.txt
 src/QBenchAnalyzer.egg-info/dependency_links.txt
 src/QBenchAnalyzer.egg-info/top_level.txt
+test/test_metrics_generator.py

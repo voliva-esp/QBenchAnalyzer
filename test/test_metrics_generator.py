@@ -1,8 +1,8 @@
-from src.QBenchAnalyzer.metrics_generator import generate_basic_metrics
-from src.QBenchAnalyzer.literal import METRIC_NUMBER_QUBITS
+from QBenchAnalyzer.metrics_generator import generate_basic_metrics
+from QBenchAnalyzer.literal import METRIC_NUMBER_QUBITS
 from qiskit import QuantumCircuit
 
-PATH = "./circuits/"
+PATH = "./test/circuits/"
 
 
 def test_all_basic_metrics():
