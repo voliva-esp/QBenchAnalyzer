@@ -1,4 +1,4 @@
-from src.QBenchAnalyzer.metrics_generator import generate_metrics
+from src.QBenchAnalyzer import generate_metrics
 from qiskit import QuantumCircuit
 
 path = "./test/circuits/"
