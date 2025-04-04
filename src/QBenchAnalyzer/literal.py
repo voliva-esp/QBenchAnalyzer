@@ -1,4 +1,5 @@
 # Basic metrics names
+METRIC_N_2_GATES_CRITICAL_PATH = "n_2gates_critical_path"
 METRIC_CONSECUTIVE_2_GATES = "n_consecutive_2_gates"
 METRIC_AVG_2_GATES_X_QUBIT = "avg_2gates_x_qubit"
 METRIC_QUBIT_CONNECTIONS = "qubit_connections"

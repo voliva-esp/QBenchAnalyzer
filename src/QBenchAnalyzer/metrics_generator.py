@@ -17,19 +17,35 @@ def generate_basic_metrics(qc, metrics=None):
         q_connections[b].add(a)
         n_2g_q[b] += 1
 
+    def update_depth(op):
+        new_depth_params = max([critical_depth[q._index] for q in op.qubits])
+        new_depth = new_depth_params[0] + 1
+        new_count_2gates = new_depth_params[1]
+        if len(op.qubits) > 1:
+            new_count_2gates += 1
+        for q in op.qubits:
+            critical_depth[q._index] = [new_depth, new_count_2gates]
+
     consecutive_gates = 0
     n = len(qc.data)
     n_2_gates = 0
     q_connections = {}
     n_2g_q = {}
+    critical_depth = {}
+    for i in range(qc.num_qubits):
+        critical_depth[i] = [0, 0]
     i = 0
     while i < n:
         temp_consecutive_gates = 0
+        op = qc.data[i]
+        update_depth(op)
         while i < n and qc.data[i].operation.num_qubits == 2:
-            add_edge(qc.data[i].qubits[0]._index, qc.data[i].qubits[1]._index)
+            add_edge(op.qubits[0]._index, op.qubits[1]._index)
             temp_consecutive_gates += 1
             n_2_gates += 1
             i += 1
+            op = qc.data[i]
+            update_depth(op)
         i += 1
         consecutive_gates = max(consecutive_gates, temp_consecutive_gates)
 
@@ -44,6 +60,7 @@ def generate_basic_metrics(qc, metrics=None):
     metrics[METRIC_AVG_2_GATES_X_QUBIT] = 2 * n_2_gates / qc.num_qubits
     metrics[METRIC_CONSECUTIVE_2_GATES] = consecutive_gates
     metrics[METRIC_NUMBER_2_GATES] = n_2_gates
+    metrics[METRIC_N_2_GATES_CRITICAL_PATH] = max([critical_depth[i] for i in range(qc.num_qubits)])[1]
     return metrics
 
 
@@ -60,7 +77,7 @@ def generate_derived_metrics(metrics):
         return math.log(sum_2gxq + 1) / number_of_qubits
 
     metrics[METRIC_ENTANGLEMENT_RATIO] = metrics[METRIC_NUMBER_2_GATES] / metrics[METRIC_NUMBER_GATES]
-    metrics[METRIC_CRITICAL_DEPTH] = metrics[METRIC_CONSECUTIVE_2_GATES] / metrics[METRIC_NUMBER_2_GATES]
+    metrics[METRIC_CRITICAL_DEPTH] = metrics[METRIC_N_2_GATES_CRITICAL_PATH] / metrics[METRIC_NUMBER_2_GATES]
     metrics[METRIC_PARALLELISM] = calculate_parallelism(metrics[METRIC_NUMBER_QUBITS],
                                                         metrics[METRIC_NUMBER_GATES],
                                                         metrics[METRIC_DEPTH])
