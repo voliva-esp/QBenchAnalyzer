@@ -1,6 +1,6 @@
 [project]
 name = "QBenchAnalyzer"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   { name="Vicente López-Oliva", email="voliva@uji.es" },
 ]

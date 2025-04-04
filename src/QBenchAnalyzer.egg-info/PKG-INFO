@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: QBenchAnalyzer
-Version: 0.0.1
+Version: 0.0.2
 Summary: Tool for analyzing quantum circuits
 Author-email: Vicente López-Oliva <voliva@uji.es>
 License: Copyright (c) 2018 The Python Packaging Authority
