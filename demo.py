@@ -12,8 +12,9 @@ class StaticCircuitGenerator(ICircuitGenerator):
         return qc
 
 
-circuit = "qaoa_vanilla_03.qasm"
+circuit = "qaoa_vanilla_04.qasm"
 qc = QuantumCircuit.from_qasm_file(PATH + circuit)
+print(qc)
 
 metrics = generate_metrics(qc)
 
