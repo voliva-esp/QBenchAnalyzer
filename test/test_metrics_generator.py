@@ -1,6 +1,6 @@
 from QBenchAnalyzer.literal import METRIC_NUMBER_QUBITS, METRIC_NUMBER_GATES, METRIC_NUMBER_2_GATES, METRIC_DEPTH, \
     METRIC_CONSECUTIVE_2_GATES, METRIC_AVG_2_GATES_X_QUBIT, METRIC_PARALLELISM, METRIC_CRITICAL_DEPTH, \
-    METRIC_ENTANGLEMENT_RATIO, METRIC_PROGRAM_COMMUNICATION
+    METRIC_ENTANGLEMENT_RATIO, METRIC_PROGRAM_COMMUNICATION, METRIC_ENTANGLEMENT_VARIANCE
 from QBenchAnalyzer.metrics_generator import generate_metrics
 from qiskit import QuantumCircuit
 import pytest
@@ -19,6 +19,7 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_CRITICAL_DEPTH: 1,
                                              METRIC_ENTANGLEMENT_RATIO: 6/15,
                                              METRIC_PROGRAM_COMMUNICATION: 1,
+                                             METRIC_ENTANGLEMENT_VARIANCE: 0,
                                          }),
                                          ("qaoa_vanilla_04", {
                                              METRIC_NUMBER_QUBITS: 4,
@@ -31,6 +32,7 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_CRITICAL_DEPTH: 5/6,
                                              METRIC_ENTANGLEMENT_RATIO: 12/26,
                                              METRIC_PROGRAM_COMMUNICATION: 1,
+                                             METRIC_ENTANGLEMENT_VARIANCE: 0,
                                          }),
                                          ("hamiltonian_04", {
                                              METRIC_NUMBER_QUBITS: 4,
@@ -43,6 +45,7 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_CRITICAL_DEPTH: 1,
                                              METRIC_ENTANGLEMENT_RATIO: 6/25,
                                              METRIC_PROGRAM_COMMUNICATION: 0.5,
+                                             METRIC_ENTANGLEMENT_VARIANCE: math.log(5, 10) / 4,
                                          }),
                                          ("hamiltonian_05", {
                                              METRIC_NUMBER_QUBITS: 5,
@@ -55,6 +58,7 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_CRITICAL_DEPTH: 1,
                                              METRIC_ENTANGLEMENT_RATIO: 8/32,
                                              METRIC_PROGRAM_COMMUNICATION: 0.4,
+                                             METRIC_ENTANGLEMENT_VARIANCE: math.log(5.8, 10) / 5,
                                          }),
                                          ("grover_noancilla_1reg_2", {
                                              METRIC_NUMBER_QUBITS: 2,
@@ -67,6 +71,7 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_CRITICAL_DEPTH: 0,
                                              METRIC_ENTANGLEMENT_RATIO: 0,
                                              METRIC_PROGRAM_COMMUNICATION: 0,
+                                             METRIC_ENTANGLEMENT_VARIANCE: 0,
                                          }),
                                          ("grover_noancilla_1reg_4", {
                                              METRIC_NUMBER_QUBITS: 4,
@@ -79,6 +84,7 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_CRITICAL_DEPTH: 48/52,
                                              METRIC_ENTANGLEMENT_RATIO: 52/142,
                                              METRIC_PROGRAM_COMMUNICATION: 1,
+                                             METRIC_ENTANGLEMENT_VARIANCE: math.log(81, 10) / 4,
                                          })
                                      ])
 
@@ -129,3 +135,6 @@ class TestDerivedMetrics(ITest):
 
     def test_program_communication_metric(self, circuit, expected_metrics):
         self.assert_metric(circuit, expected_metrics, METRIC_PROGRAM_COMMUNICATION)
+
+    def test_entanglement_variance_metric(self, circuit, expected_metrics):
+        self.assert_metric(circuit, expected_metrics, METRIC_ENTANGLEMENT_VARIANCE)
