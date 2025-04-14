@@ -4,6 +4,7 @@ from QBenchAnalyzer.literal import METRIC_NUMBER_QUBITS, METRIC_NUMBER_GATES, ME
 from QBenchAnalyzer.metrics_generator import generate_metrics
 from qiskit import QuantumCircuit
 import pytest
+import math
 
 pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                      [
@@ -55,6 +56,30 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_ENTANGLEMENT_RATIO: 8/32,
                                              METRIC_PROGRAM_COMMUNICATION: 0.4,
                                          }),
+                                         ("grover_noancilla_1reg_2", {
+                                             METRIC_NUMBER_QUBITS: 2,
+                                             METRIC_NUMBER_GATES: 6,
+                                             METRIC_NUMBER_2_GATES: 0,
+                                             METRIC_DEPTH: 4,
+                                             METRIC_CONSECUTIVE_2_GATES: 0,
+                                             METRIC_AVG_2_GATES_X_QUBIT: 0,
+                                             METRIC_PARALLELISM: 0.5,
+                                             METRIC_CRITICAL_DEPTH: 0,
+                                             METRIC_ENTANGLEMENT_RATIO: 0,
+                                             METRIC_PROGRAM_COMMUNICATION: 0,
+                                         }),
+                                         ("grover_noancilla_1reg_4", {
+                                             METRIC_NUMBER_QUBITS: 4,
+                                             METRIC_NUMBER_GATES: 142,
+                                             METRIC_NUMBER_2_GATES: 52,
+                                             METRIC_DEPTH: 93,
+                                             METRIC_CONSECUTIVE_2_GATES: 2,
+                                             METRIC_AVG_2_GATES_X_QUBIT: 26,
+                                             METRIC_PARALLELISM: 49/279,
+                                             METRIC_CRITICAL_DEPTH: 48/52,
+                                             METRIC_ENTANGLEMENT_RATIO: 52/142,
+                                             METRIC_PROGRAM_COMMUNICATION: 1,
+                                         })
                                      ])
 
 

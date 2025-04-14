@@ -2,6 +2,9 @@ from .literal import *
 import math
 
 
+BAD_GATES = ["barrier"]
+
+
 def generate_basic_metrics(qc, metrics=None):
     def add_edge(a, b):
         if a not in q_connections:
@@ -74,10 +77,10 @@ def generate_derived_metrics(metrics):
 
     def calc_entanglement_var(number_of_qubits, n_2gates_x_qubit, avg_2gates_x_qubit):
         sum_2gxq = sum([(n_2gates_x_qubit[key] - avg_2gates_x_qubit) ** 2 for key in n_2gates_x_qubit])
-        return math.log(sum_2gxq + 1) / number_of_qubits
+        return math.log(sum_2gxq + 1, 10) / number_of_qubits
 
     metrics[METRIC_ENTANGLEMENT_RATIO] = metrics[METRIC_NUMBER_2_GATES] / metrics[METRIC_NUMBER_GATES]
-    metrics[METRIC_CRITICAL_DEPTH] = metrics[METRIC_N_2_GATES_CRITICAL_PATH] / metrics[METRIC_NUMBER_2_GATES]
+    metrics[METRIC_CRITICAL_DEPTH] = metrics[METRIC_N_2_GATES_CRITICAL_PATH] / metrics[METRIC_NUMBER_2_GATES] if metrics[METRIC_NUMBER_2_GATES] > 1 else 0
     metrics[METRIC_PARALLELISM] = calculate_parallelism(metrics[METRIC_NUMBER_QUBITS],
                                                         metrics[METRIC_NUMBER_GATES],
                                                         metrics[METRIC_DEPTH])
@@ -88,7 +91,17 @@ def generate_derived_metrics(metrics):
                                                                   metrics[METRIC_AVG_2_GATES_X_QUBIT])
 
 
+def eliminate_bad_gates(qc):
+    index_to_delete = []
+    for index, instruction in enumerate(qc.data):
+        if instruction.operation.name in BAD_GATES:
+            index_to_delete.append(index)
+    for i in range(len(index_to_delete)):
+        del qc.data[index_to_delete[len(index_to_delete) - 1 - i]]
+
+
 def generate_metrics(qc):
+    eliminate_bad_gates(qc)
     metrics = {}
     generate_basic_metrics(qc, metrics)
     generate_derived_metrics(metrics)
