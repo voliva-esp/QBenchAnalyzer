@@ -12,8 +12,7 @@ class StaticCircuitGenerator(ICircuitGenerator):
         return qc
 
 
-# circuit = "qaoa_vanilla_04.qasm"
-circuit = "grover_noancilla_1reg_4.qasm"
+circuit = "qaoa_vanilla_04.qasm"
 qc = QuantumCircuit.from_qasm_file(PATH + circuit)
 print(qc)
 
