@@ -25,6 +25,58 @@ and, if you used the same circuit as the included in the repository, this will r
  'entanglement_variance': 0.0}
 ```
 
+Alternatively, you can generate predefined images using the method `analyze_circuit_group_structural`, which will generate
+an analysis of the metrics for a group of circuits. For doing so, you will need to implement a class that
+implements the `ICircuitGenerator` interface and use it to tell the method which circuits will you want to use.
+Here is an example of a functional script for calculating the metrics of the QFT circuits using the circuits between 5 and
+10 qubits:
+
+```python
+# Importing all the necesary stuff
+from QBenchAnalyzer.circuit_generator import ICircuitGenerator
+from QBenchAnalyzer import analyze_circuit_group_structural
+from qiskit import QuantumCircuit
+
+# Creating a class that could read all the circuits
+class CircuitGenerator(ICircuitGenerator): # It is important that implement the ICircuitGenerator
+    def __init__(self, name, file_name):
+        super().__init__(name)           # Title of the image
+        self.file_name = file_name       # File name of the circuits to read
+
+    def generate_qiskit_circuit(self, number_of_qubits):
+        # Calculate the path of the circuit with 'number_of_qubits' for reading
+        file_path = f"./test/{self.file_name}_{number_of_qubits}.qasm" 
+        # Return the circuit as a QuantumCircuit object
+        return QuantumCircuit.from_qasm_file(file_path)
+
+# Call this method to generate the graphic image of all metrics of one circuit group
+analyze_circuit_group_structural(
+    CircuitGenerator("Testing QFT", "qft"), # Instance of the circuit generator
+    5,                                      # Smallest number of qubits of the circuit group to read
+    10,                                     # Bigger number of qubits of the circuit group to read
+    "example.jpg",                          # Name for the output image
+    "./images/"                             # Path were the output should be store
+)
+```
+Executing the example will output an image that will look like the following:
+
+![Example of the image generated](./example.jpg)
+
+And the final working directory tree will look like:
+```
+.
+├── images
+│   ├── example.jpg
+├── test
+│   ├── qft_5.qasm
+│   ├── qft_6.qasm
+│   ├── qft_7.qasm
+│   ├── qft_8.qasm
+│   ├── qft_9.qasm
+│   └── qft_10.qasm
+├── main.py
+```
+
 ## Contributing
 If you want to make changes, it is needed to test all the changes in local before a merge request.
 To do it, it is needed to install the local changes first, and then run the test. You can use the
