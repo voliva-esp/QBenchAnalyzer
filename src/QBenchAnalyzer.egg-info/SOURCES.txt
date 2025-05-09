@@ -11,4 +11,5 @@ src/QBenchAnalyzer.egg-info/PKG-INFO
 src/QBenchAnalyzer.egg-info/SOURCES.txt
 src/QBenchAnalyzer.egg-info/dependency_links.txt
 src/QBenchAnalyzer.egg-info/top_level.txt
+test/test_errors_metrics_generator.py
 test/test_metrics_generator.py
