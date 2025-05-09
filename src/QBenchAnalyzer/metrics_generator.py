@@ -39,6 +39,11 @@ def generate_basic_metrics(qc, metrics=None):
         critical_depth[i] = [0, 0]
     i = 0
     while i < n:
+        if qc.data[i].operation.num_qubits > 2:
+            error_text = "Founded a quantum gate which affect more than 2 qubits, which is currently not supported.\n" \
+                         + "Please compile the circuit for using only gates with 1 or 2 qubits.\n" \
+                         + f"Unsupported gate: {str(qc.data)}"
+            raise ValueError(error_text)
         temp_consecutive_gates = 0
         op = qc.data[i]
         update_depth(op)
