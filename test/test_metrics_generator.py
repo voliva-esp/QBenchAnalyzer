@@ -85,6 +85,19 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_ENTANGLEMENT_RATIO: 52/142,
                                              METRIC_PROGRAM_COMMUNICATION: 1,
                                              METRIC_ENTANGLEMENT_VARIANCE: math.log(81, 10) / 4,
+                                         }),
+                                         ("ghz_10", {
+                                             METRIC_NUMBER_QUBITS: 10,
+                                             METRIC_NUMBER_GATES: 10,
+                                             METRIC_NUMBER_2_GATES: 9,
+                                             METRIC_DEPTH: 10,
+                                             METRIC_CONSECUTIVE_2_GATES: 9,
+                                             METRIC_AVG_2_GATES_X_QUBIT: 1.8,
+                                             METRIC_PARALLELISM: 0,
+                                             METRIC_CRITICAL_DEPTH: 1.0,
+                                             METRIC_ENTANGLEMENT_RATIO: 0.9,
+                                             METRIC_PROGRAM_COMMUNICATION: 0.2,
+                                             METRIC_ENTANGLEMENT_VARIANCE: 0.041497335,
                                          })
                                      ])
 

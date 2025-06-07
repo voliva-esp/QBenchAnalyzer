@@ -40,7 +40,7 @@ def generate_basic_metrics(qc, metrics=None):
     i = 0
     while i < n:
         if qc.data[i].operation.num_qubits > 2:
-            error_text = "Founded a quantum gate which affect more than 2 qubits, which is currently not supported.\n" \
+            error_text = "Found a quantum gate which affect more than 2 qubits, which is currently not supported.\n" \
                          + "Please compile the circuit for using only gates with 1 or 2 qubits.\n" \
                          + f"Unsupported gate: {str(qc.data)}"
             raise ValueError(error_text)
@@ -52,8 +52,9 @@ def generate_basic_metrics(qc, metrics=None):
             temp_consecutive_gates += 1
             n_2_gates += 1
             i += 1
-            op = qc.data[i]
-            update_depth(op)
+            if i < n:
+                op = qc.data[i]
+                update_depth(op)
         i += 1
         consecutive_gates = max(consecutive_gates, temp_consecutive_gates)
 

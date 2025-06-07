@@ -1,0 +1,6 @@
+.idea
+.venv
+/src/QBenchAnalyzer.egg-info/
+/test/__pycache__
+/src/QBenchAnalyzer.egg-info
+/build
