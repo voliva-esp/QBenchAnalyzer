@@ -1,12 +1,5 @@
+from .generator_interface import ICircuitGenerator
 from qiskit import QuantumCircuit
-
-
-class ICircuitGenerator:
-    def __init__(self, name):
-        self.name = name
-
-    def generate_qiskit_circuit(self, number_of_qubits):
-        pass
 
 
 class StaticCircuitGenerator(ICircuitGenerator):
