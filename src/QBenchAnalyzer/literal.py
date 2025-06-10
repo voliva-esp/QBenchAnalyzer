@@ -15,3 +15,13 @@ METRIC_ENTANGLEMENT_VARIANCE = "entanglement_variance"
 METRIC_ENTANGLEMENT_RATIO = "entanglement_ratio"
 METRIC_CRITICAL_DEPTH = "critical_depth"
 METRIC_PARALLELISM = "parallelism"
+
+# Plot params
+PLOT_PARAM_xLABEL = "xlabel"
+PLOT_PARAM_yLABEL = "ylabel"
+PLOT_PARAM_INTERVAL = "interval"
+PLOT_PARAM_TITLE = "title"
+PLOT_PARAM_FONTSIZE = "fontsize"
+PLOT_PARAM_FIG_WIDTH = "fig-width"
+PLOT_PARAM_FIG_HEIGHT = "fig-height"
+PLOT_PARAM_LEGEND_LOC = "legend-loc"
