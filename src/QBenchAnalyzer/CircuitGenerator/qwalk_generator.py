@@ -8,6 +8,22 @@ class QWalkGenerator(ICircuitGenerator):
         self.depth = depth
         self.ancillary_mode = ancillary_mode
 
+    def _standardize_qasm(self, str_qasm):
+        import re
+
+        split_line = str_qasm[:53].split("\n")
+        n = int(split_line[2].split("[")[1].split(']')[0])
+
+        rep = {
+            "qreg coin[1];\n": "",
+            f"qreg node[{n}]": f"qreg node[{n+1}]",
+            "coin[0]": f"node[{n}]"
+        }
+        rep = dict((re.escape(k), v) for k, v in rep.items())
+        pattern = re.compile("|".join(rep.keys()))
+        str_qasm = pattern.sub(lambda m: rep[re.escape(m.group(0))], str_qasm)
+        return str_qasm
+
     def generate_qiskit_circuit(self, number_of_qubits):
         n = number_of_qubits - 1                # One is used for the coin
         coin = QuantumRegister(1, "coin")

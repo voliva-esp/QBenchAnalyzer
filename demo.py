@@ -25,3 +25,6 @@ depth = 2
 generator = QWalkGenerator(depth=depth)
 qc = generator.generate_qiskit_circuit(n)
 print(qc)
+
+# Generating and saving a QWalk circuit
+generator.generate_and_save_as_qasm(number_of_qubits=n, file_name=f"{PATH}qwalk_d{depth}_n{n}.qasm")
