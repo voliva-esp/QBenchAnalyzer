@@ -32,7 +32,7 @@ Here is an example of a functional script for calculating the metrics of the QFT
 10 qubits:
 
 ```python
-# Importing all the necesary stuff
+# Importing all the necessary stuff
 from QBenchAnalyzer.circuit_generator import ICircuitGenerator
 from QBenchAnalyzer import analyze_circuit_group_structural
 from qiskit import QuantumCircuit
@@ -75,6 +75,26 @@ And the final working directory tree will look like:
 │   ├── qft_9.qasm
 │   └── qft_10.qasm
 ├── main.py
+```
+
+Also, if you are using statical predefined circuits, you can use the class `StaticCircuitGenerator`
+to simplify, as shown in the following example:
+```python
+# Importing all the necessary stuff
+from QBenchAnalyzer.circuit_generator import StaticCircuitGenerator
+from QBenchAnalyzer import analyze_circuit_group_structural
+    
+# Create the instance of the StaticCircuitGenerator
+circuit_generator = StaticCircuitGenerator(name='Testing QFT', path="./test/", circuit_name="qft")
+
+# Call this method to generate the graphic image of all metrics of one circuit group
+analyze_circuit_group_structural(
+    circuit_generator,                 # Instance of the circuit generator
+    5,                                 # Smallest number of qubits of the circuit group to read
+    10,                                # Bigger number of qubits of the circuit group to read
+    "example.jpg",                     # Name for the output image
+    "./images/"                        # Path were the output should be store
+)
 ```
 
 ## Contributing
