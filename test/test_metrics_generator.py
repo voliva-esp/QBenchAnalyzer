@@ -1,6 +1,7 @@
 from QBenchAnalyzer.literal import METRIC_NUMBER_QUBITS, METRIC_NUMBER_GATES, METRIC_NUMBER_2_GATES, METRIC_DEPTH, \
     METRIC_CONSECUTIVE_2_GATES, METRIC_AVG_2_GATES_X_QUBIT, METRIC_PARALLELISM, METRIC_CRITICAL_DEPTH, \
-    METRIC_ENTANGLEMENT_RATIO, METRIC_PROGRAM_COMMUNICATION, METRIC_ENTANGLEMENT_VARIANCE
+    METRIC_ENTANGLEMENT_RATIO, METRIC_PROGRAM_COMMUNICATION, METRIC_ENTANGLEMENT_VARIANCE, METRIC_N_UNIQUE_OPERANDS, \
+    METRIC_N_UNIQUE_GATES, METRIC_N_OPERANDS
 from QBenchAnalyzer.metrics_generator import generate_metrics
 from qiskit import QuantumCircuit
 import pytest
@@ -20,6 +21,9 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_ENTANGLEMENT_RATIO: 6/15,
                                              METRIC_PROGRAM_COMMUNICATION: 1,
                                              METRIC_ENTANGLEMENT_VARIANCE: 0,
+                                             METRIC_N_UNIQUE_OPERANDS: 3,
+                                             METRIC_N_UNIQUE_GATES: 4,
+                                             METRIC_N_OPERANDS: 21,
                                          }),
                                          ("qaoa_vanilla_04", {
                                              METRIC_NUMBER_QUBITS: 4,
@@ -33,6 +37,9 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_ENTANGLEMENT_RATIO: 12/26,
                                              METRIC_PROGRAM_COMMUNICATION: 1,
                                              METRIC_ENTANGLEMENT_VARIANCE: 0,
+                                             METRIC_N_UNIQUE_OPERANDS: 8,
+                                             METRIC_N_UNIQUE_GATES: 4,
+                                             METRIC_N_OPERANDS: 38,
                                          }),
                                          ("hamiltonian_04", {
                                              METRIC_NUMBER_QUBITS: 4,
@@ -46,6 +53,9 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_ENTANGLEMENT_RATIO: 6/25,
                                              METRIC_PROGRAM_COMMUNICATION: 0.5,
                                              METRIC_ENTANGLEMENT_VARIANCE: math.log(5, 10) / 4,
+                                             METRIC_N_UNIQUE_OPERANDS: 8,
+                                             METRIC_N_UNIQUE_GATES: 4,
+                                             METRIC_N_OPERANDS: 35,
                                          }),
                                          ("hamiltonian_05", {
                                              METRIC_NUMBER_QUBITS: 5,
@@ -59,6 +69,9 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_ENTANGLEMENT_RATIO: 8/32,
                                              METRIC_PROGRAM_COMMUNICATION: 0.4,
                                              METRIC_ENTANGLEMENT_VARIANCE: math.log(5.8, 10) / 5,
+                                             METRIC_N_UNIQUE_OPERANDS: 10,
+                                             METRIC_N_UNIQUE_GATES: 4,
+                                             METRIC_N_OPERANDS: 45,
                                          }),
                                          ("grover_noancilla_1reg_2", {
                                              METRIC_NUMBER_QUBITS: 2,
@@ -72,6 +85,9 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_ENTANGLEMENT_RATIO: 0,
                                              METRIC_PROGRAM_COMMUNICATION: 0,
                                              METRIC_ENTANGLEMENT_VARIANCE: 0,
+                                             METRIC_N_UNIQUE_OPERANDS: 4,
+                                             METRIC_N_UNIQUE_GATES: 4,
+                                             METRIC_N_OPERANDS: 8,
                                          }),
                                          ("grover_noancilla_1reg_4", {
                                              METRIC_NUMBER_QUBITS: 4,
@@ -85,6 +101,9 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_ENTANGLEMENT_RATIO: 52/142,
                                              METRIC_PROGRAM_COMMUNICATION: 1,
                                              METRIC_ENTANGLEMENT_VARIANCE: math.log(81, 10) / 4,
+                                             METRIC_N_UNIQUE_OPERANDS: 8,
+                                             METRIC_N_UNIQUE_GATES: 5,
+                                             METRIC_N_OPERANDS: 198,
                                          }),
                                          ("ghz_10", {
                                              METRIC_NUMBER_QUBITS: 10,
@@ -98,6 +117,9 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_ENTANGLEMENT_RATIO: 0.9,
                                              METRIC_PROGRAM_COMMUNICATION: 0.2,
                                              METRIC_ENTANGLEMENT_VARIANCE: 0.041497335,
+                                             METRIC_N_UNIQUE_OPERANDS: 10,
+                                             METRIC_N_UNIQUE_GATES: 2,
+                                             METRIC_N_OPERANDS: 19,
                                          })
                                      ])
 
@@ -134,6 +156,15 @@ class TestBasicMetrics(ITest):
 
     def test_avg_2gates_x_qubit_metrics(self, circuit, expected_metrics):
         self.assert_metric(circuit, expected_metrics, METRIC_AVG_2_GATES_X_QUBIT)
+
+    def test_n_unique_operands_metrics(self, circuit, expected_metrics):
+        self.assert_metric(circuit, expected_metrics, METRIC_N_UNIQUE_OPERANDS)
+
+    def test_n_unique_gates_metrics(self, circuit, expected_metrics):
+        self.assert_metric(circuit, expected_metrics, METRIC_N_UNIQUE_GATES)
+
+    def test_n_operands_metrics(self, circuit, expected_metrics):
+        self.assert_metric(circuit, expected_metrics, METRIC_N_OPERANDS)
 
 
 class TestDerivedMetrics(ITest):

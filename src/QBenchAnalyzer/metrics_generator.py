@@ -21,6 +21,8 @@ def generate_basic_metrics(qc, metrics=None):
         n_2g_q[b] += 1
 
     def update_depth(op):
+        unique_operators_set.add(op.operation.name)
+        n_operands[0] += op.operation.num_qubits + op.operation.num_clbits
         new_depth_params = max([critical_depth[q._index] for q in op.qubits])
         new_depth = new_depth_params[0] + 1
         new_count_2gates = new_depth_params[1]
@@ -29,7 +31,10 @@ def generate_basic_metrics(qc, metrics=None):
         for q in op.qubits:
             critical_depth[q._index] = [new_depth, new_count_2gates]
 
+    unique_operators_set = set()
     consecutive_gates = 0
+    n_operands = [0]
+    n_unique_operands = len(qc.qubits) + len(qc.clbits)
     n = len(qc.data)
     n_2_gates = 0
     q_connections = {}
@@ -70,6 +75,9 @@ def generate_basic_metrics(qc, metrics=None):
     metrics[METRIC_CONSECUTIVE_2_GATES] = consecutive_gates
     metrics[METRIC_NUMBER_2_GATES] = n_2_gates
     metrics[METRIC_N_2_GATES_CRITICAL_PATH] = max([critical_depth[i] for i in range(qc.num_qubits)])[1]
+    metrics[METRIC_N_UNIQUE_GATES] = len(unique_operators_set)
+    metrics[METRIC_N_UNIQUE_OPERANDS] = n_unique_operands
+    metrics[METRIC_N_OPERANDS] = n_operands[0]
     return metrics
 
 
