@@ -1,7 +1,8 @@
 from QBenchAnalyzer.literal import METRIC_NUMBER_QUBITS, METRIC_NUMBER_GATES, METRIC_NUMBER_2_GATES, METRIC_DEPTH, \
     METRIC_CONSECUTIVE_2_GATES, METRIC_AVG_2_GATES_X_QUBIT, METRIC_PARALLELISM, METRIC_CRITICAL_DEPTH, \
     METRIC_ENTANGLEMENT_RATIO, METRIC_PROGRAM_COMMUNICATION, METRIC_ENTANGLEMENT_VARIANCE, METRIC_N_UNIQUE_OPERANDS, \
-    METRIC_N_UNIQUE_GATES, METRIC_N_OPERANDS
+    METRIC_N_UNIQUE_GATES, METRIC_N_OPERANDS, METRIC_DIFFICULTY, METRIC_VOCABULARY, METRIC_VOLUME, METRIC_EFFORT, \
+    METRIC_LENGTH
 from QBenchAnalyzer.metrics_generator import generate_metrics
 from qiskit import QuantumCircuit
 import pytest
@@ -24,6 +25,11 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_N_UNIQUE_OPERANDS: 3,
                                              METRIC_N_UNIQUE_GATES: 4,
                                              METRIC_N_OPERANDS: 21,
+                                             METRIC_DIFFICULTY: (4 / 2) * (21 / 3),
+                                             METRIC_VOCABULARY: 3 + 4,
+                                             METRIC_VOLUME: (21 + 15) * math.log(3 + 4, 2),
+                                             METRIC_EFFORT: ((4 / 2) * (21 / 3)) * ((21 + 15) * math.log(3 + 4, 2)),
+                                             METRIC_LENGTH: 21 + 15,
                                          }),
                                          ("qaoa_vanilla_04", {
                                              METRIC_NUMBER_QUBITS: 4,
@@ -40,6 +46,11 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_N_UNIQUE_OPERANDS: 8,
                                              METRIC_N_UNIQUE_GATES: 4,
                                              METRIC_N_OPERANDS: 38,
+                                             METRIC_DIFFICULTY: (4 / 2) * (38 / 8),
+                                             METRIC_VOCABULARY: 8 + 4,
+                                             METRIC_VOLUME: (26 + 38) * math.log(8 + 4, 2),
+                                             METRIC_EFFORT: ((4 / 2) * (38 / 8)) * ((26 + 38) * math.log(8 + 4, 2)),
+                                             METRIC_LENGTH: 26 + 38,
                                          }),
                                          ("hamiltonian_04", {
                                              METRIC_NUMBER_QUBITS: 4,
@@ -56,6 +67,11 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_N_UNIQUE_OPERANDS: 8,
                                              METRIC_N_UNIQUE_GATES: 4,
                                              METRIC_N_OPERANDS: 35,
+                                             METRIC_DIFFICULTY: (4 / 2) * (35 / 8),
+                                             METRIC_VOCABULARY: 8 + 4,
+                                             METRIC_VOLUME: (25 + 35) * math.log(8 + 4, 2),
+                                             METRIC_EFFORT: ((4 / 2) * (35 / 8)) * ((25 + 35) * math.log(8 + 4, 2)),
+                                             METRIC_LENGTH: 25 + 35,
                                          }),
                                          ("hamiltonian_05", {
                                              METRIC_NUMBER_QUBITS: 5,
@@ -72,6 +88,11 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_N_UNIQUE_OPERANDS: 10,
                                              METRIC_N_UNIQUE_GATES: 4,
                                              METRIC_N_OPERANDS: 45,
+                                             METRIC_DIFFICULTY: (4 / 2) * (45 / 10),
+                                             METRIC_VOCABULARY: 10 + 4,
+                                             METRIC_VOLUME: (32 + 45) * math.log(10 + 4, 2),
+                                             METRIC_EFFORT: ((4 / 2) * (45 / 10)) * ((32 + 45) * math.log(10 + 4, 2)),
+                                             METRIC_LENGTH: 32 + 45,
                                          }),
                                          ("grover_noancilla_1reg_2", {
                                              METRIC_NUMBER_QUBITS: 2,
@@ -88,6 +109,11 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_N_UNIQUE_OPERANDS: 4,
                                              METRIC_N_UNIQUE_GATES: 4,
                                              METRIC_N_OPERANDS: 8,
+                                             METRIC_DIFFICULTY: (4 / 2) * (8 / 4),
+                                             METRIC_VOCABULARY: 4 + 4,
+                                             METRIC_VOLUME: (6 + 8) * math.log(4 + 4, 2),
+                                             METRIC_EFFORT: ((4 / 2) * (8 / 4)) * ((6 + 8) * math.log(4 + 4, 2)),
+                                             METRIC_LENGTH: 6 + 8,
                                          }),
                                          ("grover_noancilla_1reg_4", {
                                              METRIC_NUMBER_QUBITS: 4,
@@ -104,6 +130,11 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_N_UNIQUE_OPERANDS: 8,
                                              METRIC_N_UNIQUE_GATES: 5,
                                              METRIC_N_OPERANDS: 198,
+                                             METRIC_DIFFICULTY: (5 / 2) * (198 / 8),
+                                             METRIC_VOCABULARY: 8 + 5,
+                                             METRIC_VOLUME: (142 + 198) * math.log(8 + 5, 2),
+                                             METRIC_EFFORT: ((5 / 2) * (198 / 8)) * ((142 + 198) * math.log(8 + 5, 2)),
+                                             METRIC_LENGTH: 142 + 198,
                                          }),
                                          ("ghz_10", {
                                              METRIC_NUMBER_QUBITS: 10,
@@ -120,6 +151,11 @@ pytestmark = pytest.mark.parametrize("circuit,expected_metrics",
                                              METRIC_N_UNIQUE_OPERANDS: 10,
                                              METRIC_N_UNIQUE_GATES: 2,
                                              METRIC_N_OPERANDS: 19,
+                                             METRIC_DIFFICULTY: (2 / 2) * (19 / 10),
+                                             METRIC_VOCABULARY: 10 + 2,
+                                             METRIC_VOLUME: (19 + 10) * math.log(10 + 2, 2),
+                                             METRIC_EFFORT: ((2 / 2) * (19 / 10)) * ((19 + 10) * math.log(10 + 2, 2)),
+                                             METRIC_LENGTH: 19 + 10,
                                          })
                                      ])
 
@@ -182,3 +218,18 @@ class TestDerivedMetrics(ITest):
 
     def test_entanglement_variance_metric(self, circuit, expected_metrics):
         self.assert_metric(circuit, expected_metrics, METRIC_ENTANGLEMENT_VARIANCE)
+
+    def test_difficulty_metric(self, circuit, expected_metrics):
+        self.assert_metric(circuit, expected_metrics, METRIC_DIFFICULTY)
+
+    def test_vocabulary_metric(self, circuit, expected_metrics):
+        self.assert_metric(circuit, expected_metrics, METRIC_VOCABULARY)
+
+    def test_volume_metric(self, circuit, expected_metrics):
+        self.assert_metric(circuit, expected_metrics, METRIC_VOLUME)
+
+    def test_effort_metric(self, circuit, expected_metrics):
+        self.assert_metric(circuit, expected_metrics, METRIC_EFFORT)
+
+    def test_length_metric(self, circuit, expected_metrics):
+        self.assert_metric(circuit, expected_metrics, METRIC_LENGTH)

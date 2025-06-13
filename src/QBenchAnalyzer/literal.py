@@ -18,6 +18,11 @@ METRIC_ENTANGLEMENT_VARIANCE = "entanglement_variance"
 METRIC_ENTANGLEMENT_RATIO = "entanglement_ratio"
 METRIC_CRITICAL_DEPTH = "critical_depth"
 METRIC_PARALLELISM = "parallelism"
+METRIC_DIFFICULTY = "difficulty"
+METRIC_VOCABULARY = "vocabulary"
+METRIC_VOLUME = "volume"
+METRIC_EFFORT = "effort"
+METRIC_LENGTH = "length"
 
 # Plot params
 PLOT_PARAM_xLABEL = "xlabel"

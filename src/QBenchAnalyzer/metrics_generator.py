@@ -103,7 +103,13 @@ def generate_derived_metrics(metrics):
     metrics[METRIC_ENTANGLEMENT_VARIANCE] = calc_entanglement_var(metrics[METRIC_NUMBER_QUBITS],
                                                                   metrics[METRIC_N_2_GATES_X_QUBIT],
                                                                   metrics[METRIC_AVG_2_GATES_X_QUBIT])
-
+    metrics[METRIC_DIFFICULTY] = (metrics[METRIC_N_UNIQUE_GATES] / 2) * \
+                                 (metrics[METRIC_N_OPERANDS] / metrics[METRIC_N_UNIQUE_OPERANDS])
+    metrics[METRIC_VOCABULARY] = metrics[METRIC_N_UNIQUE_OPERANDS] + metrics[METRIC_N_UNIQUE_GATES]
+    metrics[METRIC_LENGTH] = metrics[METRIC_NUMBER_GATES] + metrics[METRIC_N_OPERANDS]
+    metrics[METRIC_VOLUME] = metrics[METRIC_LENGTH] * math.log(metrics[METRIC_VOCABULARY], 2)
+    metrics[METRIC_EFFORT] = metrics[METRIC_DIFFICULTY] * metrics[METRIC_VOLUME]
+    
 
 def eliminate_bad_gates(qc):
     index_to_delete = []
